@@ -1,4 +1,4 @@
-# PPSDiamondEfficiencyRadiography
+# PPSRun3Utils: Diamond efficiencies and radiographies
 
 ----------------------------------------------------------------
 Producing diamond efficiency and radiography histograms from AOD
@@ -11,9 +11,9 @@ cd CMSSW_12_4_6/src
 
 cmsenv
 
-git clone git@github.com:jjhollar/PPSDiamondEfficiencyRadiography.git
+git clone git@github.com:jjhollar/PPSRun3Utils.git
 
-cd PPSDiamondEfficiencyRadiography
+cd PPSRun3Utils
 
 scram b
 
@@ -25,7 +25,7 @@ The ouput will be a file timingHistograms.root, with a subfolder diamondHistogra
 Notes
 ----------------------------------------------------------------
 
-   * The source code is in PPSDiamondEfficiencyRadiography/PPSDiamondEfficiencyRadiography/bin/FWLiteTimingEfficiencyRadiography.cc
+   * The source code is in PPSRun3Utils/PPSRun3Utils/bin/FWLiteTimingEfficiencyRadiography.cc
 
    * The list of input files is defined in the .cc file. Currently it's set to a random example from a recent run
 
