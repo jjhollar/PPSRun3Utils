@@ -5,8 +5,8 @@ Producing plane-by-plane pixel latency plots with random
 triggers in Run 3 RECO/AOD data (tested in CMSSW_12_4_6)
 ----------------------------------------------------------------
 
-   * Requires a valid certificate proxy to find data in DAS and access 
-     remote files
+   * Requires a valid certificate/proxy to find data in DAS and access 
+     remote files. The example here is for run 361971
 
 cmsrel CMSSW_12_4_6
 
@@ -21,10 +21,8 @@ cd PPSRun3Utils
 scram b
 
 dasgoclient --query='dataset run=361971 dataset=/ZeroBias/*/AOD'
-(find the dataset/era containing the desired run)
 
 dasgoclient --query='file dataset=/ZeroBias/Run2022F-PromptReco-v1/AOD run=361971' > & InputFiles.txt
-(create a list of files containing data from the desired run+dataset)
 
 ../../bin/slc7_amd64_gcc10/FWLitePixelsLatency2022
 
