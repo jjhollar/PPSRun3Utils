@@ -48,14 +48,15 @@ Output
 Overriding defaults
 ----------------------------------------------------------------
  
-   * Default settings can be changed by passing command-line flags to the FWLitePixelsLatency2022 executible: 
+   * Default settings can be changed by modifying the variables defined at the beginning of the 
+     PPSRun3Utils/PPSRun3Utils/bin/FWLitePixelsLatency2022.cc file and recompiling: 
 
-   --outputFile <name> : name of output histogram file (default = "pixelHistogramsRecHits_test.root")
+     int minLS_ = 0;	// first lumisection to analyze				      
+     int maxLS_ = 9999; // last lumisection to analyzer
+     std::string hlt = "HLT_Random_v3"; // name of HLT path to filter on
+     std::string inputfilelist = "InputFiles.txt"; // name of file containing input PromptReco files
 
-   --inputFiles <name> : name of file containing input PromptReco files (default = "InputFiles.txt")
-
-   --hlt <name> : name of HLT path to filter on (default = "HLT_Random_v3")
-
-   --minLS <integer> : first lumisection to analyze (default = 0)
-
-   --maxLS <integer> : last lumisection to analyzer (default = 9999)
+   * In addition the output histogram filename can be changed using the command-line FWLite 
+     flag:
+	     
+ 	       --outputFile <name> : name of output histogram file (default = "pixelHistogramsRecHits_test.root")

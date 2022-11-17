@@ -46,6 +46,13 @@ int main(int argc, char* argv[]) {
   //  * open the input file
   // ----------------------------------------------------------------------
 
+  // Default values
+  int minLS_ = 0;
+  int maxLS_ = 9999;
+  std::string hlt = "HLT_Random_v3";
+  std::string inputfilelist = "InputFiles.txt";
+  std::string outputFile_ = "pixelHistogramsRecHits_test.root";
+
   // load framework libraries
   gSystem->Load("libFWCoreFWLite");
   FWLiteEnabler::enable();
@@ -56,23 +63,13 @@ int main(int argc, char* argv[]) {
   // set defaults
   parser.integerValue("maxEvents") = 100000000;
   parser.integerValue("outputEvery") = 1000;
-  parser.stringValue("outputFile") = "pixelHistogramsRecHits_test.root";
-  parser.stringValue("inputFiles") = "InputFiles.txt";
-  parser.integerValue ("minLS") = 0;
-  parser.integerValue ("maxLS") = 9999;
-  parser.stringValue ("hlt") = "HLT_Random_v3";
 
   // parse arguments
   parser.parseArguments(argc, argv);
   int maxEvents_ = parser.integerValue("maxEvents");
   unsigned int outputEvery_ = parser.integerValue("outputEvery");
-  std::string outputFile_ = parser.stringValue("outputFile");
-  std::string inputfilelist = parser.stringValue("inputFiles");
-  std::vector<std::string> inputFiles_; // = parser.stringVector("inputFiles");
-  int minLS = parser.integerValue("minLS");
-  int maxLS = parser.integerValue("maxLS");
-  std::string hlt = parser.stringValue("hlt");
 
+  std::vector<std::string> inFiles_;
   ifstream ifs(inputfilelist);
 
   std::string filename;
@@ -82,7 +79,7 @@ int main(int argc, char* argv[]) {
   while ( getline (ifs,filename) )
     {
       fullfilename = xrootdprefix + filename;
-      inputFiles_.push_back(fullfilename);
+      inFiles_.push_back(fullfilename);
     }
   ifs.close();
 
@@ -146,9 +143,9 @@ int main(int argc, char* argv[]) {
 
   int analyzed = 0;
 
-  for (unsigned int iFile = 0; iFile < inputFiles_.size(); ++iFile) {
+  for (unsigned int iFile = 0; iFile < inFiles_.size(); ++iFile) {
     // open input file (can be located on castor)
-    TFile* inFile = TFile::Open(inputFiles_[iFile].c_str());
+    TFile* inFile = TFile::Open(inFiles_[iFile].c_str());
     if (inFile) {
       // ----------------------------------------------------------------------
       // Second Part:
@@ -159,7 +156,7 @@ int main(int argc, char* argv[]) {
       //  * after the loop close the input file
       // ----------------------------------------------------------------------
       
-      std::cout << "Opening " << inputFiles_[iFile].c_str() << std::endl;
+      std::cout << "Opening " << inFiles_[iFile].c_str() << std::endl;
 
 
       fwlite::Event ev(inFile);
@@ -176,7 +173,7 @@ int main(int argc, char* argv[]) {
 
 	BX = ev.bunchCrossing();
 
-	if((lumiblock_ < minLS) || (lumiblock_ > maxLS))
+	if((lumiblock_ < minLS_) || (lumiblock_ > maxLS_))
 	  continue;
 
         int passhlt = 0;
