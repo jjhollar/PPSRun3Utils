@@ -37,8 +37,11 @@ Output
      plane in each BX. The numbering convention on the y-axis is:
 
      o 0-5:   	45-210
+
      o 6-11:	45-220
+
      o 12-17: 	56-210  
+
      o 18-23:	56-220
 
    * The other histograms in the file are track x-y maps for each RP, the rechit x-y for each plane, and the 
@@ -52,9 +55,13 @@ Overriding defaults
      PPSRun3Utils/PPSRun3Utils/bin/FWLitePixelsLatency2022.cc file and recompiling: 
 
      int minLS_ = 0;	// first lumisection to analyze				      
+
      int maxLS_ = 9999; // last lumisection to analyzer
+
      std::string hlt = "HLT_Random_v3"; // name of HLT path to filter on
+
      std::string inputfilelist = "InputFiles.txt"; // name of file containing input PromptReco files
+
      std::string outputFile_ = "pixelHistogramsRecHits_test.root"; // name of output histogram file
 
 
