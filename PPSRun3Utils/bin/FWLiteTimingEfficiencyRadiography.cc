@@ -60,33 +60,22 @@ int main(int argc, char* argv[]) {
   int maxEvents_ = parser.integerValue("maxEvents");
   unsigned int outputEvery_ = parser.integerValue("outputEvery");
   std::string outputFile_ = parser.stringValue("outputFile");
-  //  std::vector<std::string> inputFiles_ = parser.stringVector("inputFiles");
-  std::vector<std::string> inputFiles_;
+  std::string inputfilelist = "InputFiles.txt";
 
   // AOD input files
-  // Change this to use different input samples
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/cbd307d6-a078-4841-875d-97ed595594e2.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/cd0e8e54-c1f4-4c54-83d0-c0819f01b21f.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/d0192825-ab83-4bcf-9a4d-d80769a0a663.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/d1b6c28d-ed32-4515-8495-e1fa1b5b567f.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/d3448bca-d648-466d-b548-b05042f399be.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/d3bb0813-c1f1-4659-928e-a3da89d7331e.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/d82789f1-d0d8-4aa9-9bb5-e0cdaa89be6a.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/d870aa0e-416d-4f84-adae-527c7a8192c3.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/d8e14f96-0fc3-4fd6-99c3-fa21080a2d81.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/d92c23aa-9d26-4aa4-bfb3-4d735cf6c039.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/d9ba5a9e-3950-46b4-ba80-1ae5f93ef818.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/da82db5d-c1be-4d8d-b80f-76db149870d1.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/dae253ef-b440-4591-8f46-772214c8b280.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/daf660dd-facc-494a-ad18-fd327aeaa15b.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/db218c2d-427a-4050-b51e-38824e5b9b4b.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/db5da1fe-7e67-4185-bf7a-2cea1a3205a1.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/dbce10ee-7b6a-4f32-81e0-29c68c3192f3.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/ddbd67f3-9182-4137-b208-dde5f793b4b5.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/df3a5263-6758-47ed-bba3-15e37a8ed43e.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/df94c607-4714-4fc2-bed1-65f59552cda8.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/e0866f48-2808-4d39-98f2-22cef98a4778.root");
-  inputFiles_.push_back("/eos/cms/tier0/store/data/Run2022D/Muon/AOD/PromptReco-v2/000/357/815/00000/e1a4d853-218c-450a-8e35-1abddfd99bfe.root");
+  std::vector<std::string> inFiles_;
+  std::ifstream ifs2(inputfilelist);
+
+  std::string filename;
+  std::string xrootdprefix = "root://cms-xrd-global.cern.ch/";
+  std::string fullfilename;
+
+  while ( getline (ifs2,filename) )
+    {
+      fullfilename = xrootdprefix + filename;
+      inFiles_.push_back(fullfilename);
+    }
+  ifs2.close();
 
   // book a set of histograms
   fwlite::TFileService fs = fwlite::TFileService(outputFile_);
@@ -128,9 +117,9 @@ int main(int argc, char* argv[]) {
 
   int lumiblock_ = -99;
 
-  for (unsigned int iFile = 0; iFile < inputFiles_.size(); ++iFile) {
+  for (unsigned int iFile = 0; iFile < inFiles_.size(); ++iFile) {
     // open input file (can be located on castor)
-    TFile* inFile = TFile::Open(inputFiles_[iFile].c_str());
+    TFile* inFile = TFile::Open(inFiles_[iFile].c_str());
     if (inFile) {
       // ----------------------------------------------------------------------
       // Second Part:

@@ -5,6 +5,10 @@ Producing diamond efficiency and radiography histograms from AOD
 in Run 3 data (tested in CMSSW_12_4_6)
 ----------------------------------------------------------------
 
+   * A grid certificate is needed to run the DAS commands (in the example below for Run 357815). 
+     The first command finds the dataset/era corresponding to a particular run, the second command 
+     finds all the files in that dataset for that run.
+
 cmsrel CMSSW_12_4_6
 
 cd CMSSW_12_4_6/src
@@ -17,6 +21,10 @@ cd PPSRun3Utils
 
 scram b
 
+dasgoclient --query='dataset run=357815 dataset=/ZeroBias/*/AOD'
+
+dasgoclient --query='file dataset=/ZeroBias/Run2022D-PromptReco-v2/AOD' > & InputFiles.txt
+
 ../../bin/slc7_amd64_gcc10/FWLiteTimingEfficiencyRadiography
 
 The ouput will be a file timingHistograms.root, with a subfolder diamondHistograms containing all the histograms
@@ -26,8 +34,6 @@ Notes
 ----------------------------------------------------------------
 
    * The source code is in PPSRun3Utils/PPSRun3Utils/bin/FWLiteTimingEfficiencyRadiography.cc
-
-   * The list of input files is defined in the .cc file. Currently it's set to a random example from a recent run
 
    * Only the 210 pixels are used for the efficiency denominator, and for the radiographies. Examples for the 220 pixels are commented in the code
 
