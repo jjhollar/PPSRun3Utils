@@ -263,7 +263,7 @@ int main(int argc, char* argv[]) {
 			// Histogram for radiography                                                                                                                                     
 			drad45_->Fill(x45220,y45220);
 			
-			if(fabs(x45220 - xtimetrack45) < 2) // x-matching between pixel+time tracks for eff. numerator                                                  
+			if(fabs(x45220 - xtimetrack45) < 10) // x-matching between pixel+time tracks for eff. numerator                                                  
 			  deffnum45_->Fill(x45220,y45220);
 		      }
 		    
@@ -282,7 +282,7 @@ int main(int argc, char* argv[]) {
 			// Histogram for radiography                                                                                                                                     
 			drad56_->Fill(x56220,y56220);
 			
-			if(fabs(x56220 - xtimetrack56) < 2) // x-matching between pixel+time tracks for eff. numerator
+			if(fabs(x56220 - xtimetrack56) < 10) // x-matching between pixel+time tracks for eff. numerator
 			  deffnum56_->Fill(x56220,y56220);
 			
 		      }
@@ -330,106 +330,106 @@ int main(int argc, char* argv[]) {
 		    //		int channel = detidforrh.channel();
 		    
 		    // Sector 45
-		    if(station==1 && plane==0 && arm==0 && n45220==1)
+		    if(station==1 && plane==0 && arm==0 && n45220==1 && n45210==1)
 		      {
 			numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator
+			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator
 			  deffnum45plane0_->Fill(x45220,y45220);
 		      }
-		    if(station==1 && plane==1 && arm==0 && n45220==1)
+		    if(station==1 && plane==1 && arm==0 && n45220==1 && n45210==1)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
+			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
 			  deffnum45plane1_->Fill(x45220,y45220);
 		      }
-		    if(station==1 && plane==2 && arm==0 && n45220==1)
+		    if(station==1 && plane==2 && arm==0 && n45220==1 && n45210==1)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
+			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
 			  deffnum45plane2_->Fill(x45220,y45220);
 		      }
-		    if(station==1 && plane==3 && arm==0 && n45220==1)
+		    if(station==1 && plane==3 && arm==0 && n45220==1 && n45210==1)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
+			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
 			  deffnum45plane3_->Fill(x45220,y45220);
 		      }
 
 		    // Sector 56
-		    if(station==1 && plane==0 && arm==1 && n56220==1)
+		    if(station==1 && plane==0 && arm==1 && n56220==1 && n56210==1)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator
+			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator
 			  deffnum56plane0_->Fill(x56220,y56220);
 		      }		
-		    if(station==1 && plane==1 && arm==1 && n56220==1)
+		    if(station==1 && plane==1 && arm==1 && n56220==1 && n56210==1)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
+			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
 			  deffnum56plane1_->Fill(x56220,y56220);
 		      }
-		    if(station==1 && plane==2 && arm==1 && n56220==1)
+		    if(station==1 && plane==2 && arm==1 && n56220==1 && n56210==1)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                             
+			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                             
 			  deffnum56plane2_->Fill(x56220,y56220);
 		      }
-		    if(station==1 && plane==3 && arm==1 && n56220==1)
+		    if(station==1 && plane==3 && arm==1 && n56220==1 && n56210==1)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
+			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
 			  deffnum56plane3_->Fill(x56220,y56220);
 		      }
 
                     // Sector 45 box
-                    if(station==2 && plane==0 && arm==0 && n45220==1)
+                    if(station==2 && plane==0 && arm==0 && n45220==1 && n45210==1)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x45220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum45boxplane0_->Fill(x45220,y45220);
                       }
-                    if(station==2 && plane==1 && arm==0 && n45220==1)
+                    if(station==2 && plane==1 && arm==0 && n45220==1 && n45210==1)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x45220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum45boxplane1_->Fill(x45220,y45220);
                       }
-                    if(station==2 && plane==2 && arm==0 && n45220==1)
+                    if(station==2 && plane==2 && arm==0 && n45220==1 && n45210==1)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x45220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum45boxplane2_->Fill(x45220,y45220);
                       }
-                    if(station==2 && plane==3 && arm==0 && n45220==1)
+                    if(station==2 && plane==3 && arm==0 && n45220==1 && n45210==1)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x45220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum45boxplane3_->Fill(x45220,y45220);
                       }
 
                     // Sector 56 box
-                    if(station==2 && plane==0 && arm==1 && n56220==1)
+                    if(station==2 && plane==0 && arm==1 && n56220==1 && n56210==1)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x56220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum56boxplane0_->Fill(x56220,y56220);
                       }
-                    if(station==2 && plane==1 && arm==1 && n56220==1)
+                    if(station==2 && plane==1 && arm==1 && n56220==1 && n56210==1)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x56220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum56boxplane1_->Fill(x56220,y56220);
                       }
-                    if(station==2 && plane==2 && arm==1 && n56220==1)
+                    if(station==2 && plane==2 && arm==1 && n56220==1 && n56210==1)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x56220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum56boxplane2_->Fill(x56220,y56220);
                       }
-                    if(station==2 && plane==3 && arm==1 && n56220==1)
+                    if(station==2 && plane==3 && arm==1 && n56220==1 && n56210==1)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x56220 - xrh) < 2) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum56boxplane3_->Fill(x56220,y56220);
                       }
 
