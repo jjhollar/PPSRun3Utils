@@ -64,6 +64,94 @@ void PlotTimingEfficiencies()
   c2->cd(3); pl0st256box->SetMaximum(1); pl0st256box->Draw("colz"); pl0st256box->SetTitle("56 box plane0"); pl0st256box->SetStats(0);
   c2->cd(4); pl1st256box->SetMaximum(1); pl1st256box->Draw("colz"); pl1st256box->SetTitle("56 box plane1"); pl1st256box->SetStats(0);
   c2->cd(7); pl2st256box->SetMaximum(1); pl2st256box->Draw("colz"); pl3st256box->SetTitle("56 box plane2"); pl2st256box->SetStats(0);
+}
+
+
+void PlotToTs()
+{
+  TFile *f = TFile::Open("timingHistograms.root");
+
+  TH2F *pl0st145 = (TH2F *)f->Get("diamondHistograms/deffnum45plane0");
+  TH2F *pl1st145 = (TH2F *)f->Get("diamondHistograms/deffnum45plane1");
+  TH2F *pl2st145 = (TH2F *)f->Get("diamondHistograms/deffnum45plane2");
+  TH2F *pl3st145 = (TH2F *)f->Get("diamondHistograms/deffnum45plane3");
+
+  TH2F *pl0st156 = (TH2F *)f->Get("diamondHistograms/deffnum56plane0");
+  TH2F *pl1st156 = (TH2F *)f->Get("diamondHistograms/deffnum56plane1");
+  TH2F *pl2st156 = (TH2F *)f->Get("diamondHistograms/deffnum56plane2");
+  TH2F *pl3st156 = (TH2F *)f->Get("diamondHistograms/deffnum56plane3");
+
+  TH2F *pl0st245box = (TH2F *)f->Get("diamondHistograms/deffnum45boxplane0");
+  TH2F *pl1st245box = (TH2F *)f->Get("diamondHistograms/deffnum45boxplane1");
+  TH2F *pl2st245box = (TH2F *)f->Get("diamondHistograms/deffnum45boxplane2");
+  TH2F *pl3st245box = (TH2F *)f->Get("diamondHistograms/deffnum45boxplane3");
+
+  TH2F *pl0st256box = (TH2F *)f->Get("diamondHistograms/deffnum56boxplane0");
+  TH2F *pl1st256box = (TH2F *)f->Get("diamondHistograms/deffnum56boxplane1");
+  TH2F *pl2st256box = (TH2F *)f->Get("diamondHistograms/deffnum56boxplane2");
+  TH2F *pl3st256box = (TH2F *)f->Get("diamondHistograms/deffnum56boxplane3");
+
+  // 
+  TH2F *totpl0st145 = (TH2F *)f->Get("diamondHistograms/tot45plane0");
+  TH2F *totpl1st145 = (TH2F *)f->Get("diamondHistograms/tot45plane1");
+  TH2F *totpl2st145 = (TH2F *)f->Get("diamondHistograms/tot45plane2");
+  TH2F *totpl3st145 = (TH2F *)f->Get("diamondHistograms/tot45plane3");
+
+  TH2F *totpl0st156 = (TH2F *)f->Get("diamondHistograms/tot56plane0");
+  TH2F *totpl1st156 = (TH2F *)f->Get("diamondHistograms/tot56plane1");
+  TH2F *totpl2st156 = (TH2F *)f->Get("diamondHistograms/tot56plane2");
+  TH2F *totpl3st156 = (TH2F *)f->Get("diamondHistograms/tot56plane3");
+
+  TH2F *totpl0st245box = (TH2F *)f->Get("diamondHistograms/tot45boxplane0");
+  TH2F *totpl1st245box = (TH2F *)f->Get("diamondHistograms/tot45boxplane1");
+  TH2F *totpl2st245box = (TH2F *)f->Get("diamondHistograms/tot45boxplane2");
+  TH2F *totpl3st245box = (TH2F *)f->Get("diamondHistograms/tot45boxplane3");
+
+  TH2F *totpl0st256box = (TH2F *)f->Get("diamondHistograms/tot56boxplane0");
+  TH2F *totpl1st256box = (TH2F *)f->Get("diamondHistograms/tot56boxplane1");
+  TH2F *totpl2st256box = (TH2F *)f->Get("diamondHistograms/tot56boxplane2");
+  TH2F *totpl3st256box = (TH2F *)f->Get("diamondHistograms/tot56boxplane3");
+
+  totpl0st145->Divide(pl0st145);
+  totpl1st145->Divide(pl1st145);
+  totpl2st145->Divide(pl2st145);
+  totpl3st145->Divide(pl3st145);
+
+  totpl0st156->Divide(pl0st156);
+  totpl1st156->Divide(pl1st156);
+  totpl2st156->Divide(pl2st156);
+  totpl3st156->Divide(pl3st156);
+
+  totpl0st245box->Divide(pl0st245box);
+  totpl1st245box->Divide(pl1st245box);
+  totpl2st245box->Divide(pl2st245box);
+
+  totpl0st256box->Divide(pl0st256box);
+  totpl1st256box->Divide(pl1st256box);
+  totpl2st256box->Divide(pl2st256box);
+
+  TCanvas *c1 = new TCanvas("c1","c1");
+  c1->Divide(4,2);
+  c1->cd(1); totpl0st145->SetMaximum(15); totpl0st145->SetMinimum(9); totpl0st145->Draw("colz"); totpl0st145->SetTitle("45 cyl plane0"); totpl0st145->SetStats(0);
+  c1->cd(2); totpl1st145->SetMaximum(15); totpl1st145->SetMinimum(9); totpl1st145->Draw("colz"); totpl1st145->SetTitle("45 cyl plane1"); totpl1st145->SetStats(0);
+  c1->cd(5); totpl2st145->SetMaximum(15); totpl2st145->SetMinimum(9); totpl2st145->Draw("colz"); totpl2st145->SetTitle("45 cyl plane2"); totpl2st145->SetStats(0);
+  c1->cd(6); totpl3st145->SetMaximum(15); totpl3st145->SetMinimum(9); totpl3st145->Draw("colz"); totpl3st145->SetTitle("45 cyl plane3"); totpl3st145->SetStats(0);
+
+  c1->cd(3); totpl0st156->SetMaximum(15); totpl0st156->SetMinimum(9); totpl0st156->Draw("colz"); totpl0st156->SetTitle("56 cyl plane0"); totpl0st156->SetStats(0);
+  c1->cd(4); totpl1st156->SetMaximum(15); totpl1st156->SetMinimum(9); totpl1st156->Draw("colz"); totpl1st156->SetTitle("56 cyl plane1"); totpl1st156->SetStats(0);
+  c1->cd(7); totpl2st156->SetMaximum(15); totpl2st156->SetMinimum(9); totpl2st156->Draw("colz"); totpl3st156->SetTitle("56 cyl plane2"); totpl2st156->SetStats(0);
+  c1->cd(8); totpl3st156->SetMaximum(15); totpl3st156->SetMinimum(9); totpl3st156->Draw("colz"); totpl3st156->SetTitle("56 cyl plane3"); totpl3st156->SetStats(0);
+
+  TCanvas *c2 = new TCanvas("c2","c2");
+  c2->Divide(4,2);
+  c2->cd(1); totpl0st245box->SetMaximum(15); totpl0st245box->SetMinimum(9); totpl0st245box->Draw("colz"); totpl0st245box->SetTitle("45 box plane0"); totpl0st245box->SetStats(0);
+  c2->cd(2); totpl1st245box->SetMaximum(15); totpl1st245box->SetMinimum(9); totpl1st245box->Draw("colz"); totpl1st245box->SetTitle("45 box plane1"); totpl1st245box->SetStats(0);
+  c2->cd(5); totpl2st245box->SetMaximum(15); totpl2st245box->SetMinimum(9); totpl2st245box->Draw("colz"); totpl2st245box->SetTitle("45 box plane2"); totpl2st245box->SetStats(0);
+
+  c2->cd(3); totpl0st256box->SetMaximum(15); totpl0st256box->SetMinimum(9); totpl0st256box->Draw("colz"); totpl0st256box->SetTitle("56 box plane0"); totpl0st256box->SetStats(0);
+  c2->cd(4); totpl1st256box->SetMaximum(15); totpl1st256box->SetMinimum(9); totpl1st256box->Draw("colz"); totpl1st256box->SetTitle("56 box plane1"); totpl1st256box->SetStats(0);
+  c2->cd(7); totpl2st256box->SetMaximum(15); totpl2st256box->SetMinimum(9); totpl2st256box->Draw("colz"); totpl3st256box->SetTitle("56 box plane2"); totpl2st256box->SetStats(0);
+
 
 
 }
