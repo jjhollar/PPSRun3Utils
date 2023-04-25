@@ -68,7 +68,8 @@ int main(int argc, char* argv[]) {
 
   std::string filename;
   //  std::string xrootdprefix = "root://cms-xrd-global.cern.ch/";
-  std::string xrootdprefix = "/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/500/00000/";
+  std::string xrootdprefix = "/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/533/00000/";
+  //"/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/500/00000/";
   //"/eos/cms/tier0/store/express/Run2023A/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v2/000/366/192/00000/";
   std::string fullfilename;
 
@@ -88,41 +89,61 @@ int main(int argc, char* argv[]) {
   TH2F *xtpix21056_ = dir.make<TH2F>("xtpix21056","xtpix21056",40,-10,30,40,-10,30);
 
   // Denominator for all efficiencies
-  TH2F* deffden45_ = dir.make<TH2F>("deffden45","deffden45",400,-10,30,200,-10,10);
-  TH2F* deffden56_ = dir.make<TH2F>("deffden56","deffden56",400,-10,30,200,-10,10);
+  TH2F* deffden45_ = dir.make<TH2F>("deffden45","deffden45",200,0,20,100,-8,2);
+  TH2F* deffden56_ = dir.make<TH2F>("deffden56","deffden56",200,0,20,100,-8,2);
 
   // Numerator for per-arm/track efficiencies
-  TH2F* deffnum45_ = dir.make<TH2F>("deffnum45","deffnum45",400,-10,30,200,-10,10);
-  TH2F* deffnum56_ = dir.make<TH2F>("deffnum56","deffnum56",400,-10,30,200,-10,10);
+  TH2F* deffnum45_ = dir.make<TH2F>("deffnum45","deffnum45",200,0,20,100,-8,2);
+  TH2F* deffnum56_ = dir.make<TH2F>("deffnum56","deffnum56",200,0,20,100,-8,2);
 
-  // Numerator for per-plane efficiencies
-  TH2F* deffnum45plane0_ = dir.make<TH2F>("deffnum45plane0","deffnum45plane0",400,-10,30,200,-10,10);
-  TH2F* deffnum56plane0_ = dir.make<TH2F>("deffnum56plane0","deffnum56plane0",400,-10,30,200,-10,10);
-  TH2F* deffnum45plane1_ = dir.make<TH2F>("deffnum45plane1","deffnum45plane1",400,-10,30,200,-10,10);
-  TH2F* deffnum56plane1_ = dir.make<TH2F>("deffnum56plane1","deffnum56plane1",400,-10,30,200,-10,10);
-  TH2F* deffnum45plane2_ = dir.make<TH2F>("deffnum45plane2","deffnum45plane2",400,-10,30,200,-10,10);
-  TH2F* deffnum56plane2_ = dir.make<TH2F>("deffnum56plane2","deffnum56plane2",400,-10,30,200,-10,10);
-  TH2F* deffnum45plane3_ = dir.make<TH2F>("deffnum45plane3","deffnum45plane3",400,-10,30,200,-10,10);
-  TH2F* deffnum56plane3_ = dir.make<TH2F>("deffnum56plane3","deffnum56plane3",400,-10,30,200,-10,10);
+  // Numerator for per-plane efficiencies, cylindrical RPs
+  TH2F* deffnum45plane0_ = dir.make<TH2F>("deffnum45plane0","deffnum45plane0",200,0,20,100,-8,2);
+  TH2F* deffnum56plane0_ = dir.make<TH2F>("deffnum56plane0","deffnum56plane0",200,0,20,100,-8,2);
+  TH2F* deffnum45plane1_ = dir.make<TH2F>("deffnum45plane1","deffnum45plane1",200,0,20,100,-8,2);
+  TH2F* deffnum56plane1_ = dir.make<TH2F>("deffnum56plane1","deffnum56plane1",200,0,20,100,-8,2);
+  TH2F* deffnum45plane2_ = dir.make<TH2F>("deffnum45plane2","deffnum45plane2",200,0,20,100,-8,2);
+  TH2F* deffnum56plane2_ = dir.make<TH2F>("deffnum56plane2","deffnum56plane2",200,0,20,100,-8,2);
+  TH2F* deffnum45plane3_ = dir.make<TH2F>("deffnum45plane3","deffnum45plane3",200,0,20,100,-8,2);
+  TH2F* deffnum56plane3_ = dir.make<TH2F>("deffnum56plane3","deffnum56plane3",200,0,20,100,-8,2);
 
   // Numerator for per-plane efficiencies, box RPs
-  TH2F* deffnum45boxplane0_ = dir.make<TH2F>("deffnum45boxplane0","deffnum45boxplane0",400,-10,30,200,-10,10);
-  TH2F* deffnum56boxplane0_ = dir.make<TH2F>("deffnum56boxplane0","deffnum56boxplane0",400,-10,30,200,-10,10);
-  TH2F* deffnum45boxplane1_ = dir.make<TH2F>("deffnum45boxplane1","deffnum45boxplane1",400,-10,30,200,-10,10);
-  TH2F* deffnum56boxplane1_ = dir.make<TH2F>("deffnum56boxplane1","deffnum56boxplane1",400,-10,30,200,-10,10);
-  TH2F* deffnum45boxplane2_ = dir.make<TH2F>("deffnum45boxplane2","deffnum45boxplane2",400,-10,30,200,-10,10);
-  TH2F* deffnum56boxplane2_ = dir.make<TH2F>("deffnum56boxplane2","deffnum56boxplane2",400,-10,30,200,-10,10);
-  TH2F* deffnum45boxplane3_ = dir.make<TH2F>("deffnum45boxplane3","deffnum45boxplane3",400,-10,30,200,-10,10);
-  TH2F* deffnum56boxplane3_ = dir.make<TH2F>("deffnum56boxplane3","deffnum56boxplane3",400,-10,30,200,-10,10);
+  TH2F* deffnum45boxplane0_ = dir.make<TH2F>("deffnum45boxplane0","deffnum45boxplane0",200,0,20,100,-8,2);
+  TH2F* deffnum56boxplane0_ = dir.make<TH2F>("deffnum56boxplane0","deffnum56boxplane0",200,0,20,100,-8,2);
+  TH2F* deffnum45boxplane1_ = dir.make<TH2F>("deffnum45boxplane1","deffnum45boxplane1",200,0,20,100,-8,2);
+  TH2F* deffnum56boxplane1_ = dir.make<TH2F>("deffnum56boxplane1","deffnum56boxplane1",200,0,20,100,-8,2);
+  TH2F* deffnum45boxplane2_ = dir.make<TH2F>("deffnum45boxplane2","deffnum45boxplane2",200,0,20,100,-8,2);
+  TH2F* deffnum56boxplane2_ = dir.make<TH2F>("deffnum56boxplane2","deffnum56boxplane2",200,0,20,100,-8,2);
+  TH2F* deffnum45boxplane3_ = dir.make<TH2F>("deffnum45boxplane3","deffnum45boxplane3",200,0,20,100,-8,2);
+  TH2F* deffnum56boxplane3_ = dir.make<TH2F>("deffnum56boxplane3","deffnum56boxplane3",200,0,20,100,-8,2);
+
+  // Average ToT, cylindrical RPs
+  TH2F* tot45plane0_ = dir.make<TH2F>("tot45plane0","tot45plane0",200,0,20,100,-8,2);
+  TH2F* tot56plane0_ = dir.make<TH2F>("tot56plane0","tot56plane0",200,0,20,100,-8,2);
+  TH2F* tot45plane1_ = dir.make<TH2F>("tot45plane1","tot45plane1",200,0,20,100,-8,2);
+  TH2F* tot56plane1_ = dir.make<TH2F>("tot56plane1","tot56plane1",200,0,20,100,-8,2);
+  TH2F* tot45plane2_ = dir.make<TH2F>("tot45plane2","tot45plane2",200,0,20,100,-8,2);
+  TH2F* tot56plane2_ = dir.make<TH2F>("tot56plane2","tot56plane2",200,0,20,100,-8,2);
+  TH2F* tot45plane3_ = dir.make<TH2F>("tot45plane3","tot45plane3",200,0,20,100,-8,2);
+  TH2F* tot56plane3_ = dir.make<TH2F>("tot56plane3","tot56plane3",200,0,20,100,-8,2);
+
+  // Average ToT, box RPs
+  TH2F* tot45boxplane0_ = dir.make<TH2F>("tot45boxplane0","tot45boxplane0",200,0,20,100,-8,2);
+  TH2F* tot56boxplane0_ = dir.make<TH2F>("tot56boxplane0","tot56boxplane0",200,0,20,100,-8,2);
+  TH2F* tot45boxplane1_ = dir.make<TH2F>("tot45boxplane1","tot45boxplane1",200,0,20,100,-8,2);
+  TH2F* tot56boxplane1_ = dir.make<TH2F>("tot56boxplane1","tot56boxplane1",200,0,20,100,-8,2);
+  TH2F* tot45boxplane2_ = dir.make<TH2F>("tot45boxplane2","tot45boxplane2",200,0,20,100,-8,2);
+  TH2F* tot56boxplane2_ = dir.make<TH2F>("tot56boxplane2","tot56boxplane2",200,0,20,100,-8,2);
+  TH2F* tot45boxplane3_ = dir.make<TH2F>("tot45boxplane3","tot45boxplane3",200,0,20,100,-8,2);
+  TH2F* tot56boxplane3_ = dir.make<TH2F>("tot56boxplane3","tot56boxplane3",200,0,20,100,-8,2);
 
 
   TH2F *numvsls_ = dir.make<TH2F>("numvsls_","numvsls_",1000,0,1000,18,-2,16);
 
   // Radiographies and anti-radiographies
-  TH2F* drad45_ = dir.make<TH2F>("drad45","drad45",400,-10,30,200,-10,10);
-  TH2F* drad56_ = dir.make<TH2F>("drad56","drad56",400,-10,30,200,-10,10);
-  TH2F* dantirad45_ = dir.make<TH2F>("dantirad45","dantirad45",400,-10,30,200,-10,10);
-  TH2F* dantirad56_ = dir.make<TH2F>("dantirad56","dantirad56",400,-10,30,200,-10,10);
+  TH2F* drad45_ = dir.make<TH2F>("drad45","drad45",200,0,20,100,-8,2);
+  TH2F* drad56_ = dir.make<TH2F>("drad56","drad56",200,0,20,100,-8,2);
+  TH2F* dantirad45_ = dir.make<TH2F>("dantirad45","dantirad45",200,0,20,100,-8,2);
+  TH2F* dantirad56_ = dir.make<TH2F>("dantirad56","dantirad56",200,0,20,100,-8,2);
 
 
   TH1F *ls_ = dir.make<TH1F>("ls","ls",2000,0,2000);
@@ -326,81 +347,114 @@ int main(int argc, char* argv[]) {
 		    //		    std::cout << rechit.id() << std::endl;
 		    
 		    // Not currently used
-		    //		float tot = rechit.toT();
+		    float tot = rechit.toT();
 		    //		int channel = detidforrh.channel();
 		    
 		    // Sector 45
-		    if(station==1 && plane==0 && arm==0 && n45220==1 && n45210==1)
+		    if(station==1 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=0)
 		      {
 			numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator
-			  deffnum45plane0_->Fill(x45220,y45220);
+			  {
+			    deffnum45plane0_->Fill(x45220,y45220);
+			    tot45plane0_->Fill(x45220,y45220,tot);
+			  }
 		      }
-		    if(station==1 && plane==1 && arm==0 && n45220==1 && n45210==1)
+		    if(station==1 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=0)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
-			  deffnum45plane1_->Fill(x45220,y45220);
+			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			  {                
+			    deffnum45plane1_->Fill(x45220,y45220);
+                            tot45plane1_->Fill(x45220,y45220,tot);
+			  }
 		      }
-		    if(station==1 && plane==2 && arm==0 && n45220==1 && n45210==1)
+		    if(station==1 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=0)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
-			  deffnum45plane2_->Fill(x45220,y45220);
+			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			  {               
+			    deffnum45plane2_->Fill(x45220,y45220);
+			    tot45plane2_->Fill(x45220,y45220,tot);
+			  }
 		      }
-		    if(station==1 && plane==3 && arm==0 && n45220==1 && n45210==1)
+		    if(station==1 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=0)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
-			  deffnum45plane3_->Fill(x45220,y45220);
+			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			  {
+			    deffnum45plane3_->Fill(x45220,y45220);
+			    tot45plane3_->Fill(x45220,y45220,tot);
+			  }
 		      }
 
 		    // Sector 56
-		    if(station==1 && plane==0 && arm==1 && n56220==1 && n56210==1)
+		    if(station==1 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=0)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator
-			  deffnum56plane0_->Fill(x56220,y56220);
+			  {
+			    deffnum56plane0_->Fill(x56220,y56220);
+			    tot56plane0_->Fill(x56220,y56220,tot);
+			  }
 		      }		
-		    if(station==1 && plane==1 && arm==1 && n56220==1 && n56210==1)
+		    if(station==1 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=0)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
-			  deffnum56plane1_->Fill(x56220,y56220);
+			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			  {                
+			    deffnum56plane1_->Fill(x56220,y56220);
+			    tot56plane1_->Fill(x56220,y56220,tot);
+			  }
 		      }
-		    if(station==1 && plane==2 && arm==1 && n56220==1 && n56210==1)
+		    if(station==1 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=0)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                             
-			  deffnum56plane2_->Fill(x56220,y56220);
+			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+ 			  {
+			    deffnum56plane2_->Fill(x56220,y56220);
+                            tot56plane2_->Fill(x56220,y56220,tot);
+			  }
 		      }
-		    if(station==1 && plane==3 && arm==1 && n56220==1 && n56210==1)
+		    if(station==1 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=0)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                            
-			  deffnum56plane3_->Fill(x56220,y56220);
+			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			  {
+			    deffnum56plane3_->Fill(x56220,y56220);
+                            tot56plane3_->Fill(x56220,y56220,tot);
+			  }
 		      }
 
                     // Sector 45 box
-                    if(station==2 && plane==0 && arm==0 && n45220==1 && n45210==1)
+                    if(station==2 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=0)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
-                          deffnum45boxplane0_->Fill(x45220,y45220);
+			  {
+			    deffnum45boxplane0_->Fill(x45220,y45220);
+			    tot45boxplane0_->Fill(x45220,y45220,tot);
+			  }
                       }
-                    if(station==2 && plane==1 && arm==0 && n45220==1 && n45210==1)
+                    if(station==2 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=0)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
-                          deffnum45boxplane1_->Fill(x45220,y45220);
+			  {
+			    deffnum45boxplane1_->Fill(x45220,y45220);
+                            tot45boxplane1_->Fill(x45220,y45220,tot);
+			  }
                       }
-                    if(station==2 && plane==2 && arm==0 && n45220==1 && n45210==1)
+                    if(station==2 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=0)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
-                          deffnum45boxplane2_->Fill(x45220,y45220);
+			  {
+			    deffnum45boxplane2_->Fill(x45220,y45220);
+                            tot45boxplane2_->Fill(x45220,y45220,tot);
+			  }
                       }
-                    if(station==2 && plane==3 && arm==0 && n45220==1 && n45210==1)
+                    if(station==2 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=0)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
@@ -408,25 +462,34 @@ int main(int argc, char* argv[]) {
                       }
 
                     // Sector 56 box
-                    if(station==2 && plane==0 && arm==1 && n56220==1 && n56210==1)
+                    if(station==2 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=0)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
-                          deffnum56boxplane0_->Fill(x56220,y56220);
+			  {
+			    deffnum56boxplane0_->Fill(x56220,y56220);
+                            tot56boxplane0_->Fill(x56220,y56220,tot);
+			  }
                       }
-                    if(station==2 && plane==1 && arm==1 && n56220==1 && n56210==1)
+                    if(station==2 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=0)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
-                          deffnum56boxplane1_->Fill(x56220,y56220);
+			  {
+			    deffnum56boxplane1_->Fill(x56220,y56220);
+                            tot56boxplane1_->Fill(x56220,y56220,tot);
+			  }
                       }
-                    if(station==2 && plane==2 && arm==1 && n56220==1 && n56210==1)
+                    if(station==2 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=0)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
-                          deffnum56boxplane2_->Fill(x56220,y56220);
+			  {
+			    deffnum56boxplane2_->Fill(x56220,y56220);
+                            tot56boxplane2_->Fill(x56220,y56220,tot);
+			  }
                       }
-                    if(station==2 && plane==3 && arm==1 && n56220==1 && n56210==1)
+                    if(station==2 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=0)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
