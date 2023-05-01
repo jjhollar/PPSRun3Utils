@@ -68,7 +68,10 @@ int main(int argc, char* argv[]) {
 
   std::string filename;
   //  std::string xrootdprefix = "root://cms-xrd-global.cern.ch/";
-  std::string xrootdprefix = "/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/533/00000/";
+  std::string xrootdprefix = "/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/840/00000/";
+    //"/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/729/00000/";
+    //"/eos/cms/store/express/Run2023A/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v2/000/366/192/00000/";
+  //"/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/533/00000/";
   //"/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/500/00000/";
   //"/eos/cms/tier0/store/express/Run2023A/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v2/000/366/192/00000/";
   std::string fullfilename;
@@ -95,6 +98,9 @@ int main(int argc, char* argv[]) {
   // Numerator for per-arm/track efficiencies
   TH2F* deffnum45_ = dir.make<TH2F>("deffnum45","deffnum45",200,0,20,100,-8,2);
   TH2F* deffnum56_ = dir.make<TH2F>("deffnum56","deffnum56",200,0,20,100,-8,2);
+
+  TH2F* dboxeffnum45_ = dir.make<TH2F>("dboxeffnum45","dboxeffnum45",200,0,20,100,-8,2);
+  TH2F* dboxeffnum56_ = dir.make<TH2F>("dboxeffnum56","dboxeffnum56",200,0,20,100,-8,2);
 
   // Numerator for per-plane efficiencies, cylindrical RPs
   TH2F* deffnum45plane0_ = dir.make<TH2F>("deffnum45plane0","deffnum45plane0",200,0,20,100,-8,2);
@@ -140,10 +146,12 @@ int main(int argc, char* argv[]) {
   TH2F *numvsls_ = dir.make<TH2F>("numvsls_","numvsls_",1000,0,1000,18,-2,16);
 
   // Radiographies and anti-radiographies
-  TH2F* drad45_ = dir.make<TH2F>("drad45","drad45",200,0,20,100,-8,2);
-  TH2F* drad56_ = dir.make<TH2F>("drad56","drad56",200,0,20,100,-8,2);
-  TH2F* dantirad45_ = dir.make<TH2F>("dantirad45","dantirad45",200,0,20,100,-8,2);
-  TH2F* dantirad56_ = dir.make<TH2F>("dantirad56","dantirad56",200,0,20,100,-8,2);
+  TH2F* drad45_ = dir.make<TH2F>("drad45","drad45",200,0,20,200,-10,10);
+  TH2F* drad56_ = dir.make<TH2F>("drad56","drad56",200,0,20,200,-10,10);
+  TH2F* dantirad45_ = dir.make<TH2F>("dantirad45","dantirad45",200,0,20,200,-10,10);
+  TH2F* dantirad56_ = dir.make<TH2F>("dantirad56","dantirad56",200,0,20,200,-10,10);
+  TH2F* dboxrad45_ = dir.make<TH2F>("dboxrad45","dboxrad45",200,0,20,200,-10,10);
+  TH2F* dboxrad56_ = dir.make<TH2F>("dboxrad56","dboxrad56",200,0,20,200,-10,10);
 
 
   TH1F *ls_ = dir.make<TH1F>("ls","ls",2000,0,2000);
@@ -191,6 +199,11 @@ int main(int argc, char* argv[]) {
 	// 2070937600
 	// 2054160384
 
+	// Diamonds box
+	// 2073034752 
+	// 2056257536
+	
+
 	//        float x45210=-999.;
 	//        float y45210=-999.;
 	//        float x56210=-999.;
@@ -206,19 +219,20 @@ int main(int argc, char* argv[]) {
 
 	float xtimetrack45=-999.;
 	float xtimetrack56=-999.;
-
+	float xboxtimetrack45=-999.;
+	float xboxtimetrack56=-999.;
 	
 	int n45210=0; int n56210=0; int ntimetrack56=0; int ntimetrack45=0;
-	int n45220=0; int n56220=0; 
+	int n45220=0; int n56220=0; int nboxtimetrack45=0; int nboxtimetrack56=0;
 
 
         // Handle to the collection of lite tracks                                                                                                                                  
 	edm::Handle<std::vector<CTPPSLocalTrackLite> > ppstracks;
 
 	// Use this for running on standard Physics AOD
-	event.getByLabel(std::string("ctppsLocalTrackLiteProducerAlCaRecoProducer"), ppstracks);
+	//	event.getByLabel(std::string("ctppsLocalTrackLiteProducer"), ppstracks);
 	// Use this instead for running on AlCaPPS AOD
-	//	event.getByLabel(std::string("ctppsLocalTrackLiteProducerAlCaRecoProducer"), ppstracks);
+	event.getByLabel(std::string("ctppsLocalTrackLiteProducerAlCaRecoProducer"), ppstracks);
 
 	/*
 	 * Loop on tracks to get pixel tracks for the efficiency denominator
@@ -284,7 +298,7 @@ int main(int argc, char* argv[]) {
 			// Histogram for radiography                                                                                                                                     
 			drad45_->Fill(x45220,y45220);
 			
-			if(fabs(x45220 - xtimetrack45) < 10) // x-matching between pixel+time tracks for eff. numerator                                                  
+			if(fabs(x45220 - xtimetrack45) < 20) // x-matching between pixel+time tracks for eff. numerator                                                  
 			  deffnum45_->Fill(x45220,y45220);
 		      }
 		    
@@ -303,13 +317,50 @@ int main(int argc, char* argv[]) {
 			// Histogram for radiography                                                                                                                                     
 			drad56_->Fill(x56220,y56220);
 			
-			if(fabs(x56220 - xtimetrack56) < 10) // x-matching between pixel+time tracks for eff. numerator
+			if(fabs(x56220 - xtimetrack56) < 20) // x-matching between pixel+time tracks for eff. numerator
 			  deffnum56_->Fill(x56220,y56220);
 			
 		      }
 		    
 		    ntimetrack56++;
 		  }
+		if(track1->rpId() == 2056257536)
+		  {
+                    xboxtimetrack45 = track1->x();
+
+                    if(n45210 == 1 && n45220 == 1)
+                      {
+                        // Pixel-diamond correlation to define matching cuts                                                                                                                                 
+                        xtpix21045_->Fill(x45220,xboxtimetrack45);
+
+                        // Histogram for radiography                                                                                                                                                         
+                        dboxrad45_->Fill(x45220,y45220);
+
+                        if(fabs(x45220 - xboxtimetrack45) < 20) // x-matching between pixel+time tracks for eff. numerator                                                                                      
+                          dboxeffnum45_->Fill(x45220,y45220);
+                      }
+
+                    nboxtimetrack45++;
+		  }
+                if(track1->rpId() == 2073034752)
+                  {
+                    xboxtimetrack56 = track1->x();
+
+                    if(n56210 == 1 && n56220 == 1)
+                      {
+                        // Pixel-diamond correlation to define matching cuts                                                                                                                               
+                        xtpix21056_->Fill(x56220,xboxtimetrack56);
+
+                        // Histogram for radiography                                                                                                                                                       
+                        dboxrad56_->Fill(x56220,y56220);
+
+                        if(fabs(x56220 - xboxtimetrack56) < 20) // x-matching between pixel+time tracks for eff. numerator                                                                                 
+                          dboxeffnum56_->Fill(x56220,y56220);
+                      }
+
+                    nboxtimetrack56++;
+                  }
+
 	      }
 	    
 	    
@@ -327,11 +378,10 @@ int main(int argc, char* argv[]) {
 	     * Now loop on Diamond rechits to do plane-by-plane efficiencies
 	     */
 	    edm::Handle< edm::DetSetVector<CTPPSDiamondRecHit> > diamondRecHits;
-	    // Use this for running on standard Physics AOD                                                                                                                              
-	    event.getByLabel(std::string("ctppsDiamondRecHitsAlCaRecoProducer"), diamondRecHits);                                                                                                       
-	    
-	    // Use this instead for running on AlCaPPS AOD                                                                                                                               
-	    //        event.getByLabel(std::string("ctppsDiamondRecHitsAlCaRecoProducer"), diamondRecHits);
+	    // Use this for running on standard Physics AOD                                                                                   
+	    //	    event.getByLabel(std::string("ctppsDiamondRecHits"), diamondRecHits);                                             
+	    // Use this instead for running on AlCaPPS AOD                                                                                    
+	    event.getByLabel(std::string("ctppsDiamondRecHitsAlCaRecoProducer"), diamondRecHits);
 	
 	    for ( const auto& rechits_ds : *diamondRecHits )
 	      {
@@ -351,37 +401,37 @@ int main(int argc, char* argv[]) {
 		    //		int channel = detidforrh.channel();
 		    
 		    // Sector 45
-		    if(station==1 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=0)
+		    if(station==1 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
 		      {
 			numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator
+			if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator
 			  {
 			    deffnum45plane0_->Fill(x45220,y45220);
 			    tot45plane0_->Fill(x45220,y45220,tot);
 			  }
 		      }
-		    if(station==1 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=0)
+		    if(station==1 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
 			  {                
 			    deffnum45plane1_->Fill(x45220,y45220);
                             tot45plane1_->Fill(x45220,y45220,tot);
 			  }
 		      }
-		    if(station==1 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=0)
+		    if(station==1 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
 			  {               
 			    deffnum45plane2_->Fill(x45220,y45220);
 			    tot45plane2_->Fill(x45220,y45220,tot);
 			  }
 		      }
-		    if(station==1 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=0)
+		    if(station==1 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
 			  {
 			    deffnum45plane3_->Fill(x45220,y45220);
 			    tot45plane3_->Fill(x45220,y45220,tot);
@@ -389,37 +439,37 @@ int main(int argc, char* argv[]) {
 		      }
 
 		    // Sector 56
-		    if(station==1 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=0)
+		    if(station==1 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator
+			if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator
 			  {
 			    deffnum56plane0_->Fill(x56220,y56220);
 			    tot56plane0_->Fill(x56220,y56220,tot);
 			  }
 		      }		
-		    if(station==1 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=0)
+		    if(station==1 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
 			  {                
 			    deffnum56plane1_->Fill(x56220,y56220);
 			    tot56plane1_->Fill(x56220,y56220,tot);
 			  }
 		      }
-		    if(station==1 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=0)
+		    if(station==1 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
  			  {
 			    deffnum56plane2_->Fill(x56220,y56220);
                             tot56plane2_->Fill(x56220,y56220,tot);
 			  }
 		      }
-		    if(station==1 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=0)
+		    if(station==1 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
-			if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                            
+			if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
 			  {
 			    deffnum56plane3_->Fill(x56220,y56220);
                             tot56plane3_->Fill(x56220,y56220,tot);
@@ -427,72 +477,72 @@ int main(int argc, char* argv[]) {
 		      }
 
                     // Sector 45 box
-                    if(station==2 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=0)
+                    if(station==2 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
 			  {
 			    deffnum45boxplane0_->Fill(x45220,y45220);
 			    tot45boxplane0_->Fill(x45220,y45220,tot);
 			  }
                       }
-                    if(station==2 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=0)
+                    if(station==2 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
 			  {
 			    deffnum45boxplane1_->Fill(x45220,y45220);
                             tot45boxplane1_->Fill(x45220,y45220,tot);
 			  }
                       }
-                    if(station==2 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=0)
+                    if(station==2 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
 			  {
 			    deffnum45boxplane2_->Fill(x45220,y45220);
                             tot45boxplane2_->Fill(x45220,y45220,tot);
 			  }
                       }
-                    if(station==2 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=0)
+                    if(station==2 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x45220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum45boxplane3_->Fill(x45220,y45220);
                       }
 
                     // Sector 56 box
-                    if(station==2 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=0)
+                    if(station==2 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
 			  {
 			    deffnum56boxplane0_->Fill(x56220,y56220);
                             tot56boxplane0_->Fill(x56220,y56220,tot);
 			  }
                       }
-                    if(station==2 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=0)
+                    if(station==2 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
 			  {
 			    deffnum56boxplane1_->Fill(x56220,y56220);
                             tot56boxplane1_->Fill(x56220,y56220,tot);
 			  }
                       }
-                    if(station==2 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=0)
+                    if(station==2 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
 			  {
 			    deffnum56boxplane2_->Fill(x56220,y56220);
                             tot56boxplane2_->Fill(x56220,y56220,tot);
 			  }
                       }
-                    if(station==2 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=0)
+                    if(station==2 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
-                        if(fabs(x56220 - xrh) < 10) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
+                        if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
                           deffnum56boxplane3_->Fill(x56220,y56220);
                       }
 
