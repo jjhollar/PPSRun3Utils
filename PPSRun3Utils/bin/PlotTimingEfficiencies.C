@@ -51,6 +51,9 @@ void PlotTimingEfficiencies()
   num45->Divide(den45);
   num56->Divide(den56);
 
+  boxnum45->Divide(den45);
+  boxnum56->Divide(den56);
+
   TCanvas *c1 = new TCanvas("c1","c1",800,400);
   c1->Divide(4,2);
   c1->cd(1); pl0st145->SetMaximum(1); pl0st145->Draw("colz"); pl0st145->SetTitle("45 cyl plane0"); pl0st145->SetStats(0);

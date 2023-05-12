@@ -1,13 +1,13 @@
 # PPSRun3Utils: Diamond efficiencies, radiographies, and time-over-threshold plots
 
 ----------------------------------------------------------------
-Producing diamond efficiency and radiography histograms from AOD
+Producing diamond efficiency and radiography histograms from PPS ALCARECO 
 in Run 3 data (tested in CMSSW_13_0_3)
 ----------------------------------------------------------------
 
-   * A grid certificate is needed to run the DAS commands (in the example below for Run 357815). 
-     The first command finds the dataset/era corresponding to a particular run, the second command 
-     finds all the files in that dataset for that run.
+   * Here it's assumed the code is run on ALCA PPS express files from Tier0. Temporarily, 
+     the path to the files must be hardcoded in the .cc file before compilation (to be improved...)
+     The recipe corresponds to one specific example for Run 367337
 
 cmsrel CMSSW_13_0_3
 
@@ -16,14 +16,20 @@ cd CMSSW_13_0_3/src
 cmsenv
 
 git clone git@github.com:jjhollar/PPSRun3Utils.git
+(note that if you don't need to commit changes, you can use https://github.com/jjhollar/PPSRun3Utils.git to clone the repository without a password)
 
-cd PPSRun3Utils
+cd PPSRun3Utils/PPSRun3Utils/bin
+
+eos ls /eos/cms/tier0/store/express/Run2023C/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/367/337/00000 > & InputFiles.txt
+
+[TEMPORARY WORKAROUND: edit the line L71 in FWLiteTimingEfficiencyRadiography.cc. The variable std::string xrootdprefix should point to the 
+same eos directory used to generate the InputFiles.txt list in the previous step]
+
+cd ../../..
 
 scram b
 
-dasgoclient --query='dataset run=357815 dataset=/ZeroBias/*/AOD'
-
-dasgoclient --query='file dataset=/ZeroBias/Run2022D-PromptReco-v2/AOD' > & InputFiles.txt
+cd PPSRun3Utils/PPSRun3Utils/bin
 
 ../../bin/slc7_amd64_gcc10/FWLiteTimingEfficiencyRadiography
 
@@ -48,5 +54,6 @@ Notes
         time-track or rechit is found, the efficiency can artificially appear >100%. Adding a tighter pixel-diamond matching cut for the 
 	efficiency numerator should improve this
 
-   * By default, all timing rechits are used. For the ToT plots, the code should be changed to use only rechits with a valid ToT>0
+   * By default, all timing rechits are used. In order to make sensible ToT plots, the code should be changed to use only rechits with a valid ToT>0
+
 

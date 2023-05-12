@@ -68,12 +68,8 @@ int main(int argc, char* argv[]) {
 
   std::string filename;
   //  std::string xrootdprefix = "root://cms-xrd-global.cern.ch/";
-  std::string xrootdprefix = "/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/840/00000/";
-    //"/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/729/00000/";
-    //"/eos/cms/store/express/Run2023A/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v2/000/366/192/00000/";
-  //"/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/533/00000/";
-  //"/eos/cms/tier0/store/express/Run2023B/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/366/500/00000/";
-  //"/eos/cms/tier0/store/express/Run2023A/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v2/000/366/192/00000/";
+  std::string xrootdprefix = "/eos/cms/tier0/store/express/Run2023C/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/367/337/00000/";
+
   std::string fullfilename;
 
   while ( getline (ifs2,filename) )
