@@ -14,4 +14,7 @@
   <bin file="FWLiteTimingEfficiencyRadiography.cc">
   </bin>
 
+  <bin file="FWLiteDiamondsLatency2023.cc">
+  </bin>
+
 </environment>
