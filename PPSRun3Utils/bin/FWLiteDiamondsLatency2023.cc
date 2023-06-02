@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
 		int code = (arm*96) + (simplestation*48) + (plane*12) + channel;
 		planevsbx->Fill(BX,code);
 		//		if((code >= 85 && code <= 100) || (code >= 160))
-		std::cout << "\tarm, station, plane, channel, BX = " << arm << ", " << station << ", " << plane << ", " << channel << ", " << BX << ": code = " << code << std::endl;
+		// std::cout << "\tarm, station, plane, channel, BX = " << arm << ", " << station << ", " << plane << ", " << channel << ", " << BX << ": code = " << code << std::endl;
 
 	      }
 	  }	
