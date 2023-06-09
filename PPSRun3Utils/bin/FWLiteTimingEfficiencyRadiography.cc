@@ -10,6 +10,7 @@
 #include <TROOT.h>
 #include <TFile.h>
 #include <TSystem.h>
+#include "TString.h"
 
 #include "DataFormats/FWLite/interface/Event.h"
 #include "DataFormats/Common/interface/Handle.h"
@@ -29,11 +30,13 @@
 #include "DataFormats/CTPPSReco/interface/CTPPSPixelRecHit.h"
 #include "PhysicsTools/FWLite/interface/TFileService.h"
 #include "PhysicsTools/FWLite/interface/CommandLineParser.h"
+#include "PhysicsTools/FWLite/interface/VariableMapCont.h"
 
 int main(int argc, char* argv[]) {
   // define what muon you are using; this is necessary as FWLite is not
   // capable of reading edm::Views
   using reco::Muon;
+  using optutl::CommandLineParser;
 
   // ----------------------------------------------------------------------
   // First Part:
@@ -54,21 +57,29 @@ int main(int argc, char* argv[]) {
   parser.integerValue("maxEvents") = 120000000;
   parser.integerValue("outputEvery") = 10000;
   parser.stringValue("outputFile") = "timingHistograms.root";
-
+  parser.addOption("inputPath",CommandLineParser::kString, "Path to input files", "/eos/cms/tier0/store/express/Run2023C/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v2/000/367/790/00000/"
+);
+  parser.addOption("minimumToT",CommandLineParser::kDouble,"minimum ToT for rechits",-999.0);
+  parser.addOption("mode",CommandLineParser::kInteger,"use AlCaPPS or PromptReco",1);
+  
   // parse arguments
   parser.parseArguments(argc, argv);
   int maxEvents_ = parser.integerValue("maxEvents");
   unsigned int outputEvery_ = parser.integerValue("outputEvery");
+  double totCut_ = parser.doubleValue("minimumToT");
   std::string outputFile_ = parser.stringValue("outputFile");
+  std::string inputfilepath_ = parser.stringValue("inputPath");
+  int mode_ = parser.integerValue("mode");
   std::string inputfilelist = "InputFiles.txt";
 
-  // AOD input files
+// AOD input files
   std::vector<std::string> inFiles_;
   std::ifstream ifs2(inputfilelist);
 
   std::string filename;
   //  std::string xrootdprefix = "root://cms-xrd-global.cern.ch/";
-  std::string xrootdprefix = "/eos/cms/tier0/store/express/Run2023C/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/367/337/00000/";
+  std::string xrootdprefix = "";
+  xrootdprefix = inputfilepath_;
 
   std::string fullfilename;
 
@@ -225,10 +236,12 @@ int main(int argc, char* argv[]) {
         // Handle to the collection of lite tracks                                                                                                                                  
 	edm::Handle<std::vector<CTPPSLocalTrackLite> > ppstracks;
 
-	// Use this for running on standard Physics AOD
-	//	event.getByLabel(std::string("ctppsLocalTrackLiteProducer"), ppstracks);
-	// Use this instead for running on AlCaPPS AOD
-	event.getByLabel(std::string("ctppsLocalTrackLiteProducerAlCaRecoProducer"), ppstracks);
+	// Switch to run on AlCaPPS or standard Physics AOD
+	if(mode_ == 1)
+	  event.getByLabel(std::string("ctppsLocalTrackLiteProducerAlCaRecoProducer"), ppstracks);
+	else if(mode_ == 2)
+	  event.getByLabel(std::string("ctppsLocalTrackLiteProducer"), ppstracks);                                                                                                        
+
 
 	/*
 	 * Loop on tracks to get pixel tracks for the efficiency denominator
@@ -374,11 +387,13 @@ int main(int argc, char* argv[]) {
 	     * Now loop on Diamond rechits to do plane-by-plane efficiencies
 	     */
 	    edm::Handle< edm::DetSetVector<CTPPSDiamondRecHit> > diamondRecHits;
-	    // Use this for running on standard Physics AOD                                                                                   
-	    //	    event.getByLabel(std::string("ctppsDiamondRecHits"), diamondRecHits);                                             
-	    // Use this instead for running on AlCaPPS AOD                                                                                    
-	    event.getByLabel(std::string("ctppsDiamondRecHitsAlCaRecoProducer"), diamondRecHits);
-	
+
+	    // Switch to run on AlCaPPS or standard Physics AOD                                                                                                                               
+	    if(mode_ == 1)
+	      event.getByLabel(std::string("ctppsDiamondRecHitsAlCaRecoProducer"), diamondRecHits);
+	    else if(mode_ == 2)
+	      event.getByLabel(std::string("ctppsDiamondRecHits"), diamondRecHits);
+
 	    for ( const auto& rechits_ds : *diamondRecHits )
 	      {
 		const CTPPSDiamondDetId detidforrh( rechits_ds.detId() );
@@ -397,7 +412,7 @@ int main(int argc, char* argv[]) {
 		    //		int channel = detidforrh.channel();
 		    
 		    // Sector 45
-		    if(station==1 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
+		    if(station==1 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=totCut_)
 		      {
 			numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator
@@ -406,7 +421,7 @@ int main(int argc, char* argv[]) {
 			    tot45plane0_->Fill(x45220,y45220,tot);
 			  }
 		      }
-		    if(station==1 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
+		    if(station==1 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=totCut_)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
@@ -415,7 +430,7 @@ int main(int argc, char* argv[]) {
                             tot45plane1_->Fill(x45220,y45220,tot);
 			  }
 		      }
-		    if(station==1 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
+		    if(station==1 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=totCut_)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
@@ -424,7 +439,7 @@ int main(int argc, char* argv[]) {
 			    tot45plane2_->Fill(x45220,y45220,tot);
 			  }
 		      }
-		    if(station==1 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
+		    if(station==1 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=totCut_)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
@@ -435,7 +450,7 @@ int main(int argc, char* argv[]) {
 		      }
 
 		    // Sector 56
-		    if(station==1 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
+		    if(station==1 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=totCut_)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator
@@ -444,7 +459,7 @@ int main(int argc, char* argv[]) {
 			    tot56plane0_->Fill(x56220,y56220,tot);
 			  }
 		      }		
-		    if(station==1 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
+		    if(station==1 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=totCut_)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
@@ -453,7 +468,7 @@ int main(int argc, char* argv[]) {
 			    tot56plane1_->Fill(x56220,y56220,tot);
 			  }
 		      }
-		    if(station==1 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
+		    if(station==1 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=totCut_)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
@@ -462,7 +477,7 @@ int main(int argc, char* argv[]) {
                             tot56plane2_->Fill(x56220,y56220,tot);
 			  }
 		      }
-		    if(station==1 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
+		    if(station==1 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=totCut_)
 		      {
                         numvsls_->Fill(lumiblock_,plane+(arm*4));
 			if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                            
@@ -473,7 +488,7 @@ int main(int argc, char* argv[]) {
 		      }
 
                     // Sector 45 box
-                    if(station==2 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
+                    if(station==2 && plane==0 && arm==0 && n45220==1 && n45210==1 && tot>=totCut_)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
@@ -482,7 +497,7 @@ int main(int argc, char* argv[]) {
 			    tot45boxplane0_->Fill(x45220,y45220,tot);
 			  }
                       }
-                    if(station==2 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
+                    if(station==2 && plane==1 && arm==0 && n45220==1 && n45210==1 && tot>=totCut_)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
@@ -491,7 +506,7 @@ int main(int argc, char* argv[]) {
                             tot45boxplane1_->Fill(x45220,y45220,tot);
 			  }
                       }
-                    if(station==2 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
+                    if(station==2 && plane==2 && arm==0 && n45220==1 && n45210==1 && tot>=totCut_)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
@@ -500,7 +515,7 @@ int main(int argc, char* argv[]) {
                             tot45boxplane2_->Fill(x45220,y45220,tot);
 			  }
                       }
-                    if(station==2 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=-999)
+                    if(station==2 && plane==3 && arm==0 && n45220==1 && n45210==1 && tot>=totCut_)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
@@ -508,7 +523,7 @@ int main(int argc, char* argv[]) {
                       }
 
                     // Sector 56 box
-                    if(station==2 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
+                    if(station==2 && plane==0 && arm==1 && n56220==1 && n56210==1 && tot>=totCut_)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
@@ -517,7 +532,7 @@ int main(int argc, char* argv[]) {
                             tot56boxplane0_->Fill(x56220,y56220,tot);
 			  }
                       }
-                    if(station==2 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
+                    if(station==2 && plane==1 && arm==1 && n56220==1 && n56210==1 && tot>=totCut_)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
@@ -526,7 +541,7 @@ int main(int argc, char* argv[]) {
                             tot56boxplane1_->Fill(x56220,y56220,tot);
 			  }
                       }
-                    if(station==2 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
+                    if(station==2 && plane==2 && arm==1 && n56220==1 && n56210==1 && tot>=totCut_)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
@@ -535,7 +550,7 @@ int main(int argc, char* argv[]) {
                             tot56boxplane2_->Fill(x56220,y56220,tot);
 			  }
                       }
-                    if(station==2 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=-999)
+                    if(station==2 && plane==3 && arm==1 && n56220==1 && n56210==1 && tot>=totCut_)
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
