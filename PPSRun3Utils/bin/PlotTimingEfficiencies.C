@@ -96,10 +96,11 @@ void PlotTimingEfficiencies(TString infile = "timingHistograms.root")
 }
 
 
-void PlotToTs()
+void PlotToTs(TString infile = "timingHistograms.root")
 {
-  //  TFile *f = TFile::Open("timingHistograms.root");
-  TFile *f = TFile::Open("timingHistograms_ToT_run368609.root");
+  gStyle->SetPalette(107);
+
+  TFile *f = TFile::Open(infile);
 
   TH2F *pl0st145 = (TH2F *)f->Get("diamondHistograms/deffnum45plane0");
   TH2F *pl1st145 = (TH2F *)f->Get("diamondHistograms/deffnum45plane1");
@@ -181,6 +182,11 @@ void PlotToTs()
   c2->cd(3); totpl0st256box->SetMaximum(15); totpl0st256box->SetMinimum(7); totpl0st256box->Draw("colz"); totpl0st256box->SetTitle("56 box plane0"); totpl0st256box->SetStats(0);
   c2->cd(4); totpl1st256box->SetMaximum(15); totpl1st256box->SetMinimum(7); totpl1st256box->Draw("colz"); totpl1st256box->SetTitle("56 box plane1"); totpl1st256box->SetStats(0);
   c2->cd(7); totpl2st256box->SetMaximum(15); totpl2st256box->SetMinimum(7); totpl2st256box->Draw("colz"); totpl3st256box->SetTitle("56 box plane2"); totpl2st256box->SetStats(0);
+
+  TObjArray *tx = infile.Tokenize(".");
+  TString outplot = ((TObjString *)(tx->At(0)))->String();
+  c1->SaveAs("ToT_CylindricalPlanes_" + outplot + ".pdf");
+  c2->SaveAs("ToT_BoxPlanes_" + outplot + ".pdf");
 }
 
 void PlotRadiographies()
