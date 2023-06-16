@@ -1,6 +1,6 @@
-void PlotTimingEfficiencies()
+void PlotTimingEfficiencies(TString infile = "timingHistograms.root")
 {
-  TFile *f = TFile::Open("timingHistograms.root");
+  TFile *f = TFile::Open(infile);
 
   TH2F *den45 = (TH2F *)f->Get("diamondHistograms/deffden45");
   TH2F *den56 = (TH2F *)f->Get("diamondHistograms/deffden56");
@@ -86,12 +86,20 @@ void PlotTimingEfficiencies()
   c4->cd(1); boxnum45->Draw("colz"); boxnum45->SetTitle("45 time-tracks"); boxnum45->SetStats(0); boxnum45->SetMaximum(1);
   c4->cd(2); boxnum56->Draw("colz"); boxnum56->SetTitle("56 time-tracks"); boxnum56->SetStats(0); boxnum56->SetMaximum(1);
 
+  TObjArray *tx = infile.Tokenize(".");
+  TString outplot = ((TObjString *)(tx->At(0)))->String();
+  c1->SaveAs("CylindricalPlanes_" + outplot + ".pdf");
+  c2->SaveAs("BoxPlanes_" + outplot + ".pdf");
+  c3->SaveAs("CylindricalTimeTracks_" + outplot + ".pdf");
+  c4->SaveAs("BoxTimeTracks_" + outplot + ".pdf");
+
 }
 
 
 void PlotToTs()
 {
-  TFile *f = TFile::Open("timingHistograms.root");
+  //  TFile *f = TFile::Open("timingHistograms.root");
+  TFile *f = TFile::Open("timingHistograms_ToT_run368609.root");
 
   TH2F *pl0st145 = (TH2F *)f->Get("diamondHistograms/deffnum45plane0");
   TH2F *pl1st145 = (TH2F *)f->Get("diamondHistograms/deffnum45plane1");
