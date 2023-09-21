@@ -43,7 +43,6 @@ FWLiteTimingEfficiencyRadiography binary:
 	By default the program uses the collection names from the PPS AlCaReco (mode 1). By setting mode=2, the collection 
 	names from the standard PromptReco/AOD will be used instead.	 
 
-
 A plotting macro PlotTimingEfficiencies.C gives an example of drawing the output histograms of efficiency, ToT, and
 radiographies. To use it with the above example, open a ROOT session and do:
 
@@ -59,6 +58,8 @@ Notes
 ----------------------------------------------------------------
 
    * The source code is in PPSRun3Utils/PPSRun3Utils/bin/FWLiteTimingEfficiencyRadiography.cc
+
+   * The JSON files with the list of good runs/lumi sections for PPS are at: https://twiki.cern.ch/twiki/bin/view/CMS/CTPPSDatasets2023
 
    * As of April 2023, the code is updated for 2023 conditions. This means both the 210 and 220m pixel tracks are used for the event selection 
      in the efficiency/ToT/radiography plots, and both the cylindrical and 220-near timing stations are included. For 2022 data, this 
