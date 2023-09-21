@@ -14,8 +14,9 @@ cd CMSSW_13_0_9/src
 
 cmsenv
 
-git clone git@github.com:jjhollar/PPSRun3Utils.git
-(note that if you don't need to commit changes, you can use https://github.com/jjhollar/PPSRun3Utils.git to clone the repository without a password)
+git clone https://github.com/jjhollar/PPSRun3Utils.git
+(this does not allow committing changes - git clone git@github.com:jjhollar/PPSRun3Utils.git should be used instead)
+
 
 scram b
 
