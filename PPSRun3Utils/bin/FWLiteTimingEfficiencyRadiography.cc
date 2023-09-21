@@ -59,6 +59,8 @@ int main(int argc, char* argv[]) {
   parser.stringValue("outputFile") = "timingHistograms.root";
   parser.addOption("inputPath",CommandLineParser::kString, "Path to input files", "/eos/cms/tier0/store/express/Run2023C/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v2/000/367/790/00000/"
 );
+  parser.addOption("minLS",CommandLineParser::kInteger,"first LumiSection",1);
+  parser.addOption("maxLS",CommandLineParser::kInteger,"last LumiSection",9999);
   parser.addOption("minimumToT",CommandLineParser::kDouble,"minimum ToT for rechits",-999.0);
   parser.addOption("mode",CommandLineParser::kInteger,"use AlCaPPS or PromptReco",1);
   
@@ -66,6 +68,8 @@ int main(int argc, char* argv[]) {
   parser.parseArguments(argc, argv);
   int maxEvents_ = parser.integerValue("maxEvents");
   unsigned int outputEvery_ = parser.integerValue("outputEvery");
+  int minLS_ = parser.integerValue("minLS");
+  int maxLS_ = parser.integerValue("maxLS");
   double totCut_ = parser.doubleValue("minimumToT");
   std::string outputFile_ = parser.stringValue("outputFile");
   std::string inputfilepath_ = parser.stringValue("inputPath");
@@ -193,6 +197,10 @@ int main(int argc, char* argv[]) {
 
 	// LumiSection
         lumiblock_ = ev.luminosityBlock();
+
+	if(lumiblock_< minLS_ || lumiblock_ > maxLS_)
+	  continue;
+
 	ls_->Fill(lumiblock_);
 
 	// Long RP IDs for Lite tracks
