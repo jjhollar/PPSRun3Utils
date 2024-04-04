@@ -71,10 +71,13 @@ void PlotTimingEfficiencies(TString infile = "timingHistograms.root")
   c2->cd(1); pl0st245box->SetMaximum(1); pl0st245box->Draw("colz"); pl0st245box->SetTitle("45 box plane0"); pl0st245box->SetStats(0);
   c2->cd(2); pl1st245box->SetMaximum(1); pl1st245box->Draw("colz"); pl1st245box->SetTitle("45 box plane1"); pl1st245box->SetStats(0);
   c2->cd(5); pl2st245box->SetMaximum(1); pl2st245box->Draw("colz"); pl2st245box->SetTitle("45 box plane2"); pl2st245box->SetStats(0);
+  c2->cd(6); pl3st245box->SetMaximum(1); pl3st245box->Draw("colz"); pl3st245box->SetTitle("45 box plane3"); pl3st245box->SetStats(0);
 
   c2->cd(3); pl0st256box->SetMaximum(1); pl0st256box->Draw("colz"); pl0st256box->SetTitle("56 box plane0"); pl0st256box->SetStats(0);
   c2->cd(4); pl1st256box->SetMaximum(1); pl1st256box->Draw("colz"); pl1st256box->SetTitle("56 box plane1"); pl1st256box->SetStats(0);
-  c2->cd(7); pl2st256box->SetMaximum(1); pl2st256box->Draw("colz"); pl3st256box->SetTitle("56 box plane2"); pl2st256box->SetStats(0);
+  c2->cd(7); pl2st256box->SetMaximum(1); pl2st256box->Draw("colz"); pl2st256box->SetTitle("56 box plane2"); pl2st256box->SetStats(0);
+  c2->cd(8); pl3st256box->SetMaximum(1); pl3st256box->Draw("colz"); pl3st256box->SetTitle("56 box plane3"); pl3st256box->SetStats(0);
+
 
   TCanvas *c3 = new TCanvas("c3","c3");
   c3->Divide(2,1);
@@ -191,7 +194,7 @@ void PlotToTs(TString infile = "timingHistograms.root")
 
 void PlotRadiographies()
 {
-  TFile *f = TFile::Open("timingHistograms.root");
+  TFile *f = TFile::Open("timingHistograms_Run378867_LS1to1000.root");
 
   TH2F *rad45 = (TH2F *)f->Get("diamondHistograms/drad45");
   TH2F *rad56 = (TH2F *)f->Get("diamondHistograms/drad56");

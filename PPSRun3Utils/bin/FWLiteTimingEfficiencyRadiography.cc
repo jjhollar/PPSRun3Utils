@@ -163,6 +163,8 @@ int main(int argc, char* argv[]) {
   TH2F* dantirad56_ = dir.make<TH2F>("dantirad56","dantirad56",200,0,20,200,-10,10);
   TH2F* dboxrad45_ = dir.make<TH2F>("dboxrad45","dboxrad45",200,0,20,200,-10,10);
   TH2F* dboxrad56_ = dir.make<TH2F>("dboxrad56","dboxrad56",200,0,20,200,-10,10);
+  TH2F* dboxantirad45_ = dir.make<TH2F>("dboxantirad45","dboxantirad45",200,0,20,200,-10,10);
+  TH2F* dboxantirad56_ = dir.make<TH2F>("dboxantirad56","dboxantirad56",200,0,20,200,-10,10);
 
 
   TH1F *ls_ = dir.make<TH1F>("ls","ls",2000,0,2000);
@@ -390,7 +392,11 @@ int main(int argc, char* argv[]) {
 	    if(n56210 == 1 && n56220 == 1 && ntimetrack56==0)
 	      dantirad56_->Fill(x56220,y56220);
 	    
-	
+	    if(n45210 == 1 && n45220 == 1 && nboxtimetrack45==0)
+	      dboxantirad45_->Fill(x45220,y45220);
+	    if(n56210 == 1 && n56220 == 1 && nboxtimetrack56==0)
+              dboxantirad56_->Fill(x56220,y56220);
+
 	    /*
 	     * Now loop on Diamond rechits to do plane-by-plane efficiencies
 	     */
