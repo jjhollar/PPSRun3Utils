@@ -44,9 +44,11 @@ void PlotTimingEfficiencies(TString infile = "timingHistograms.root")
   pl0st245box->Divide(den45);
   pl1st245box->Divide(den45);
   pl2st245box->Divide(den45);
+  pl3st245box->Divide(den45);
   pl0st256box->Divide(den56);
   pl1st256box->Divide(den56);
   pl2st256box->Divide(den56);
+  pl3st256box->Divide(den56);
 
   num45->Divide(den45);
   num56->Divide(den56);
@@ -181,10 +183,12 @@ void PlotToTs(TString infile = "timingHistograms.root")
   c2->cd(1); totpl0st245box->SetMaximum(15); totpl0st245box->SetMinimum(7); totpl0st245box->Draw("colz"); totpl0st245box->SetTitle("45 box plane0"); totpl0st245box->SetStats(0);
   c2->cd(2); totpl1st245box->SetMaximum(15); totpl1st245box->SetMinimum(7); totpl1st245box->Draw("colz"); totpl1st245box->SetTitle("45 box plane1"); totpl1st245box->SetStats(0);
   c2->cd(5); totpl2st245box->SetMaximum(15); totpl2st245box->SetMinimum(7); totpl2st245box->Draw("colz"); totpl2st245box->SetTitle("45 box plane2"); totpl2st245box->SetStats(0);
+  c2->cd(6); totpl3st245box->SetMaximum(15); totpl3st245box->SetMinimum(7); totpl3st245box->Draw("colz"); totpl3st245box->SetTitle("45 box plane3"); totpl3st245box->SetStats(0);
 
   c2->cd(3); totpl0st256box->SetMaximum(15); totpl0st256box->SetMinimum(7); totpl0st256box->Draw("colz"); totpl0st256box->SetTitle("56 box plane0"); totpl0st256box->SetStats(0);
   c2->cd(4); totpl1st256box->SetMaximum(15); totpl1st256box->SetMinimum(7); totpl1st256box->Draw("colz"); totpl1st256box->SetTitle("56 box plane1"); totpl1st256box->SetStats(0);
   c2->cd(7); totpl2st256box->SetMaximum(15); totpl2st256box->SetMinimum(7); totpl2st256box->Draw("colz"); totpl3st256box->SetTitle("56 box plane2"); totpl2st256box->SetStats(0);
+  c2->cd(8); totpl3st256box->SetMaximum(15); totpl3st256box->SetMinimum(7); totpl3st256box->Draw("colz"); totpl3st256box->SetTitle("56 box plane3"); totpl3st256box->SetStats(0);
 
   TObjArray *tx = infile.Tokenize(".");
   TString outplot = ((TObjString *)(tx->At(0)))->String();
