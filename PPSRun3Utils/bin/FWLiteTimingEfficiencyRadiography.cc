@@ -533,7 +533,10 @@ int main(int argc, char* argv[]) {
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x45220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
-                          deffnum45boxplane3_->Fill(x45220,y45220);
+			  {
+			    deffnum45boxplane3_->Fill(x45220,y45220);
+                            tot45boxplane3_->Fill(x45220,y45220,tot);
+			  }
                       }
 
                     // Sector 56 box
@@ -568,7 +571,10 @@ int main(int argc, char* argv[]) {
                       {
                         numvsls_->Fill(lumiblock_,plane+(arm*4)+8);
                         if(fabs(x56220 - xrh) < 20) //  x-matching between pixel+diamond rechits for eff. numerator                                                         
-                          deffnum56boxplane3_->Fill(x56220,y56220);
+			  {
+			    deffnum56boxplane3_->Fill(x56220,y56220);
+                            tot56boxplane3_->Fill(x56220,y56220,tot);
+			  }
                       }
 
 
