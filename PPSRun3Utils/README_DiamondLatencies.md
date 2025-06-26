@@ -2,12 +2,12 @@
 
 ----------------------------------------------------------------
 Producing channel-by-channel diamond latency plots with random 
-triggers in Run 3 RECO/AOD data (tested in CMSSW_13_0_3)
+triggers in Run 3 RECO/AOD data (tested in CMSSW_15_0_8)
 ----------------------------------------------------------------
 
-cmsrel CMSSW_13_0_3
+cmsrel CMSSW_15_0_8
 
-cd CMSSW_13_0_3/src
+cd CMSSW_15_0_8/src
 
 cmsenv
 

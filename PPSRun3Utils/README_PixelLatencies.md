@@ -2,15 +2,15 @@
 
 ----------------------------------------------------------------
 Producing plane-by-plane pixel latency plots with random 
-triggers in Run 3 RECO/AOD data (tested in CMSSW_12_4_6)
+triggers in Run 3 RECO/AOD data (tested in CMSSW_15_0_8)
 ----------------------------------------------------------------
 
    * Requires a valid certificate/proxy to find data in DAS and access 
      remote files. The example here is for run 361971
 
-cmsrel CMSSW_12_4_6
+cmsrel CMSSW_15_0_8
 
-cd CMSSW_12_4_6/src
+cd CMSSW_15_0_8/src
 
 cmsenv
 

@@ -2,15 +2,15 @@
 
 ----------------------------------------------------------------
 Producing diamond efficiency and radiography histograms from PPS ALCARECO 
-in Run 3 data (tested in CMSSW_13_0_9)
+in Run 3 data (tested in CMSSW_15_0_8)
 ----------------------------------------------------------------
 
    * Updated 20/09/2023 to allow a configurable range of LumiSections to be chosen
      The recipe corresponds to one specific example for LumiSections 1-100 of Run 370102
 
-cmsrel CMSSW_13_0_9
+cmsrel CMSSW_15_0_8
 
-cd CMSSW_13_0_9/src
+cd CMSSW_15_0_8/src
 
 cmsenv
 

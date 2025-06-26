@@ -26,7 +26,6 @@
 #include "DataFormats/Common/interface/TriggerResults.h"
 #include "FWCore/Common/interface/TriggerNames.h"
 #include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
-#include "HLTrigger/HLTcore/interface/HLTPrescaleProvider.h"
 
 
 #include "DataFormats/Common/interface/DetSet.h"
@@ -70,7 +69,7 @@ int main(int argc, char* argv[]) {
   unsigned int outputEvery_ = parser.integerValue("outputEvery");
 
   std::vector<std::string> inFiles_;
-  ifstream ifs(inputfilelist);
+  std::ifstream ifs(inputfilelist);
 
   std::string filename;
   //  std::string xrootdprefix = "root://cms-xrd-global.cern.ch/";
