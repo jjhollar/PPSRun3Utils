@@ -24,7 +24,7 @@ dasgoclient --query='dataset run=361971 dataset=/ZeroBias/*/AOD'
 
 dasgoclient --query='file dataset=/ZeroBias/Run2022F-PromptReco-v1/AOD run=361971' > & InputFiles.txt
 
-../../bin/slc7_amd64_gcc10/FWLitePixelsLatency2022
+../../bin/el9_amd64_gcc12/FWLitePixelsLatency2022
 
 ----------------------------------------------------------------
 Output

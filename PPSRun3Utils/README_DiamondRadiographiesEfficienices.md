@@ -24,7 +24,7 @@ cd PPSRun3Utils/PPSRun3Utils/bin
 
 eos ls /eos/cms/store/express/Run2023D/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/370/102/00000/ > & InputFiles.txt
 
-../../../../bin/slc7_amd64_gcc11/FWLiteTimingEfficiencyRadiography inputPath=/eos/cms/store/express/Run2023D/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/370/102/00000/ minLS=1 maxLS=100 outputFile=timingHistograms_Run370102_LS1to100.root
+../../../../bin/el9_amd64_gcc12/FWLiteTimingEfficiencyRadiography inputPath=/eos/cms/store/express/Run2023D/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/370/102/00000/ minLS=1 maxLS=100 outputFile=timingHistograms_Run370102_LS1to100.root
 
 In this example the output file will be named "timingHistograms_Run370102_LS1to100.root", with a subfolder "diamondHistograms" containing all the histograms
 

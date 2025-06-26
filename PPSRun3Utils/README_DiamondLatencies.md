@@ -19,7 +19,7 @@ cd PPSRun3Utils/PPSRun3Utils/bin
 
 eos ls /eos/cms/tier0/store/express/Run2023C/StreamALCAPPSExpress/ALCARECO/PPSCalMaxTracks-Express-v1/000/367/337/00000 > & InputFiles.txt
 
-../../../../bin/slc7_amd64_gcc11/FWLiteDiamondsLatency2023
+../../../../bin/el9_amd64_gcc12/FWLiteDiamondsLatency2023
 
 ----------------------------------------------------------------
 Output
